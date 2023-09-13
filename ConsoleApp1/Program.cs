@@ -1,7 +1,9 @@
-﻿string mensagemDeBoasVindas = "Seja bem vindo ao Screen Sound";
+﻿using System.Net.Mime;
+
+string mensagemDeBoasVindas = "Seja bem vindo ao Screen Sound";
 
 Dictionary<string, List<int>> bandasRegistradas = new Dictionary<string, List<int>>();
-bandasRegistradas.Add("Pinky e Floid", new List<int>{10,8,6});
+bandasRegistradas.Add("Pinky e Floid", new List<int>{10,10,10});
 bandasRegistradas.Add("The Beatles", new List<int>());
 
 void ExibirLogo()
@@ -37,9 +39,9 @@ void ExibirOpcoesDoMenu()
             break;
         case 3: AvaliarUmaBanda();
             break;
-        case 4: Console.WriteLine("Voce digitou a opcao " + opcaoEscolhidaNumerica);
+        case 4: ExibirMediaDasBandas();
             break;
-        case 0: Console.WriteLine("Voce digitou a opcao " + opcaoEscolhidaNumerica);
+        case 0: SairDoMenu();
             break;
         default: Console.WriteLine("Opcao invalida");
             break;
@@ -112,6 +114,41 @@ void AvaliarUmaBanda()
         Console.Clear();
         ExibirOpcoesDoMenu();
     }
+}
+
+void ExibirMediaDasBandas()
+{
+    Console.Clear();
+    ExibirTituloDaOpcao("Exibir média de uma banda");
+    Console.Write("Digite a banda que deseja ver a média: ");
+    string bandaDigitada = Console.ReadLine()!;
+
+    if (bandasRegistradas.ContainsKey(bandaDigitada))
+    {
+        List<int> notas = bandasRegistradas[bandaDigitada];
+        double media = notas.Count > 0 ? notas.Average() : 0;
+        Console.WriteLine($"Banda: {bandaDigitada}, Média: {media}");
+        Console.WriteLine("Aperte qualquer tecla para voltar ao menu principal");
+        Console.ReadKey();
+        Console.Clear();
+        ExibirOpcoesDoMenu();
+    }
+    else
+    {
+        Console.WriteLine($"\nA Banda {bandaDigitada} não foi encontrada");
+        Console.WriteLine("Aperte uma tecla para voltar ao menu principal");
+        Console.ReadKey();
+        Console.Clear();
+        ExibirOpcoesDoMenu();
+    }
+
+    Thread.Sleep(4000);
+    ExibirOpcoesDoMenu();
+}
+
+void SairDoMenu()
+{
+    Environment.Exit(0);
 }
 
 ExibirOpcoesDoMenu();
